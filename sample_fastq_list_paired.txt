@@ -1,0 +1,3 @@
+sample_id	fastq_1	fastq_2
+NCN1	ds200527_01_S1_R1_001.fastq.gz	ds200527_01_S1_R2_001.fastq.gz
+NCN3	ds200527_02_S2_R1_001.fastq.gz	ds200527_02_S2_R2_001.fastq.gz
