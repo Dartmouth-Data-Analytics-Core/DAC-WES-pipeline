@@ -70,7 +70,7 @@ Example data (downsampled fastq.gz files) can be found in the `example_data/` fo
 
 Clone this repository:
 ```shell
-git clone https://github.com/Dartmouth-Data-Analytics-Core/DAC-WES-pipeline.git
+git clone https://github.com/Dartmouth-Data-Analytics-Core/DAC-WES-pipeline
 cd DAC-WES-pipeline
 ```
 
