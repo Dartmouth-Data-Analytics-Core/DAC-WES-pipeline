@@ -13,7 +13,8 @@
 ## Introduction
 This pipeline is meant to process whole-exome sequencing (WES) data. Currently, this pipeline is compatible *only* on the [Dartmouth Discovery HPC](https://rc.dartmouth.edu/discoveryhpc/). This repository houses the necessary files to implement this pipeline via a snakemake workflow and SLURM-job submission script to run processes in parallel. 
 
-Please note that this pipeline [requires prerequisites](#prerequisites) to run properly. As such, an additional script `001_prepare_bed_list.bash` is included in this repository. Example data are from a targetted mouse WES experiment. Two samples are included and have been downsampled to 0.5% of the original data (for storage purposes on this repo.)
+Please note that this pipeline [requires prerequisites](#prerequisites) to run properly. 
+Example data are from a targetted mouse WES experiment. Two samples are included and have been downsampled to 0.5% of the original data (for storage purposes on this repo.)
 
 ## Pipeline
 ![Alt text](img/rulegraph.png)
