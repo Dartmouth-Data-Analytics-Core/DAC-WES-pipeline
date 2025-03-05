@@ -18,6 +18,19 @@ This pipeline is meant to process whole-exome sequencing (WES) data. Currently, 
 ## Pipeline
 ![Alt text](img/rulegraph.png)
 
+|Rule|Purpose|Outputs|Software|
+|----|-------|-------|--------|
+|trim_reads|Trim raw fastqs to remove low quality bases and adapter sequences|`trimming/` directory containing trimmed fastq.gz files|[cutadapt 4.6](https://cutadapt.readthedocs.io/en/stable/)|
+|alignment| Align trimmed reads to reference genome with BWA-MEM|`alignment/` directory containing aligned bam files and their corresponding index (.bai) files|[BWA 0.7.17](https://bio-bwa.sourceforge.net/bwa.shtml)|
+|mark_duplicates|Flag duplicate reads|`markdup/` directory containing bam files with duplicates flagged|[Picard 2.27.1](https://broadinstitute.github.io/picard/) [Bedtools 2.29.1](https://bedtools.readthedocs.io/en/latest/)|
+|prepare_freebayes|Prepare a text file of freebayes commands to be ran in parallel|`all_freebayes_commands.txt` text file|[freebayes 1.3.8](https://github.com/freebayes/freebayes)|
+|collect_metrics|Collect hybrid-selection metrics|`metrics/` directory containing metrics files|[Picard 2.27.1](https://broadinstitute.github.io/picard/)|
+|run_Freebayes_parallel|Run the freebayes commands|`freebayes/` directory containing raw vcf files|[freebayes 1.3.8](https://github.com/freebayes/freebayes) [GNU parallel](https://savannah.gnu.org/forum/forum.php?forum_id=10039)|
+|snpeff|Annotate raw vcf files|`snpeff/` directory containing annotated vcf files|[snpeff ](https://pcingola.github.io/SnpEff/) [bcftools 1.21](https://samtools.github.io/bcftools/bcftools.html)|
+|filter_vcf|Filter out variants called on mitochondrial, X, and Y chromosomes, as well as variants called on unplaced scaffolds|`filtered/` directory containing filtered vcf files|[bcftools 1.21](https://samtools.github.io/bcftools/bcftools.html)|
+|generate_mafs|Convert filtered vcf files to maf format for downstream analysis, place all region text files in their own directory|`MAFs/` directory containing filtered MAF files. `regions/` folder containing all x* region text files.|[vcf2maf](https://github.com/mskcc/vcf2maf)|
+
+
 ## Prerequisites
 In order to successfully run this pipeline, you will need a target regions file which indicates which genomic coordinates were targetted during the library preparation stage. Example data included in this repository are derived from samples targetted with the [Twist Mouse Exome Panel](https://www.twistbioscience.com/products/ngs/fixed-panels/mouse-exome-panel). The regions file, which should be in [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) indicatres which genomic regions were targetted in the experiment. The example data included in this repository includes the `Twist_Mouse_Exome_Target_Rev1_7APR20.bed` file, which is built on the [GRCm38 mm10 genome](https://genome.ucsc.edu/cgi-bin/hgGateway?db=mm10). Since this pipeline implements [freebayes](https://github.com/freebayes/freebayes) to call variants, to save time and computational resources, the bed file is split into different regions, allowing the parallelization of the `freebayes` rule. 
 
@@ -116,7 +129,6 @@ pip install -r requirements.txt -t .
 ```shell
 # Run the job script
 sbatch run_sigProfilerAssignment.sh
-## NEED TO WRITE AND TEST THE BATCH SCRIPT
 ```
 
 ## Contact
