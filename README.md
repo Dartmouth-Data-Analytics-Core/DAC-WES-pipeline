@@ -32,10 +32,16 @@ This pipeline is meant to process whole-exome sequencing (WES) data. Currently, 
 
 
 ## Prerequisites
-In order to successfully run this pipeline, you will need a target regions file which indicates which genomic coordinates were targetted during the library preparation stage. Example data included in this repository are derived from samples targetted with the [Twist Mouse Exome Panel](https://www.twistbioscience.com/products/ngs/fixed-panels/mouse-exome-panel). The regions file, which should be in [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) indicatres which genomic regions were targetted in the experiment. The example data included in this repository includes the `Twist_Mouse_Exome_Target_Rev1_7APR20.bed` file, which is built on the [GRCm38 mm10 genome](https://genome.ucsc.edu/cgi-bin/hgGateway?db=mm10). Since this pipeline implements [freebayes](https://github.com/freebayes/freebayes) to call variants, to save time and computational resources, the bed file is split into different regions, allowing the parallelization of the `freebayes` rule. 
+In order to successfully run this pipeline, you will need a target regions file which indicates which genomic coordinates were targetted during the library preparation stage. Example data included in this repository are derived from samples targetted with the [Twist Mouse Exome Panel](https://www.twistbioscience.com/products/ngs/fixed-panels/mouse-exome-panel). The regions file, which should be in [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) will be used to direct mapping and parallelize freebayes commands. Included in this repository is the `Twist_Mouse_Exome_Target_Rev1_7APR20.bed` file, which is built on the [GRCm38 mm10 genome](https://genome.ucsc.edu/cgi-bin/hgGateway?db=mm10). 
 
-To generate these regions, along with a sequence dictionary and interval list to ensure the Snakefile runs without error, you *must* run the `001_prepare_bed_list.bash` script. This script is a simple SLURM-job submission script, built for compatibility on the [Dartmouth Discovery HPC](https://rc.dartmouth.edu/discoveryhpc/). In this script, you must edit the `TARGETS` and `REF` arguments. `TARGETS` expects the full path to your exome target bed file and `REF` expects the full path to your organisms reference in [fasta format](https://www.ncbi.nlm.nih.gov/genbank/fastaformat/#:~:text=In%20FASTA%20format%20the%20line,should%20not%20contain%20any%20spaces.)
+To generate these regions, along with a sequence dictionary and interval list, you *must* run the `001_prepare_bed_list.bash` script. This script is a simple SLURM-job submission script, built for compatibility on the [Dartmouth Discovery HPC](https://rc.dartmouth.edu/discoveryhpc/). In this script, you must edit the `TARGETS` and `REF` arguments. `TARGETS` expects the full path to your exome target bed file and `REF` expects the full path to your organisms reference in [fasta format](https://www.ncbi.nlm.nih.gov/genbank/fastaformat/#:~:text=In%20FASTA%20format%20the%20line,should%20not%20contain%20any%20spaces.)
 
+To run the code, run the following command:
+
+```shell
+# Run the prerequisite code
+sbatch 001_prepare_bed_list.bash
+```
 
 ## Files
 In summary, the following prerequisites are required to run:
@@ -49,6 +55,7 @@ In summary, the following prerequisites are required to run:
 |`bed.list`| file, txt format| text file generated in `001_prepare_bed_list.bash`|
 
 Examples of these files can be found in the `example_files/` folder.
+Example data (downsampled fastq.gz files) can be found in the `example_data/` folder.
 
 
 ## Implementation
