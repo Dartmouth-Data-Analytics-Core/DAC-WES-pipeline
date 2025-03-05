@@ -48,6 +48,8 @@ In summary, the following prerequisites are required to run:
 |`reference.fa`|file, fasta format|fasta file for your organism. Required for script `001_prepare_bed_list.bash`|
 |`bed.list`| file, txt format| text file generated in `001_prepare_bed_list.bash`|
 
+Examples of these files can be found in the `example_files/` folder.
+
 
 ## Implementation
 
