@@ -35,7 +35,7 @@ Example data are from a targetted mouse WES experiment. Two samples are included
 ## Prerequisites
 In order to successfully run this pipeline, you will need a target regions file which indicates which genomic coordinates were targetted during the library preparation stage. Example data included in this repository are derived from samples targetted with the [Twist Mouse Exome Panel](https://www.twistbioscience.com/products/ngs/fixed-panels/mouse-exome-panel). The regions file, which should be in [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) will be used to direct mapping and parallelize freebayes commands. Included in this repository is the `Twist_Mouse_Exome_Target_Rev1_7APR20.bed` file, which is built on the [GRCm38 mm10 genome](https://genome.ucsc.edu/cgi-bin/hgGateway?db=mm10). 
 
-To generate these regions, along with a sequence dictionary and interval list, you *must* run the `001_prepare_bed_list.sh` script. This script is a simple SLURM-job submission script, built for compatibility on the [Dartmouth Discovery HPC](https://rc.dartmouth.edu/discoveryhpc/). In this script, you must edit the `TARGETS` and `REF` arguments. `TARGETS` expects the full path to your exome target bed file and `REF` expects the full path to your organisms reference in [fasta format](https://www.ncbi.nlm.nih.gov/genbank/fastaformat/#:~:text=In%20FASTA%20format%20the%20line,should%20not%20contain%20any%20spaces.)
+To generate these regions, along with a sequence dictionary and interval list, you *must* run the `001_prepare_bed_list.sh` script. This script is a simple SLURM-job submission script, built for compatibility on the [Dartmouth Discovery HPC](https://rc.dartmouth.edu/discoveryhpc/). In this script, you must edit the `TARGETS`, `REF`, and `ORG` arguments. `TARGETS` expects the full path to your exome target bed file and `REF` expects the full path to your organisms reference in [fasta format](https://www.ncbi.nlm.nih.gov/genbank/fastaformat/#:~:text=In%20FASTA%20format%20the%20line,should%20not%20contain%20any%20spaces.) `ORG` expects the organism genome build to dynamically name output files.
 
 To run the code, run the following command:
 
@@ -44,6 +44,7 @@ To run the code, run the following command:
 #----- Set paths
 TARGETS="Twist_Mouse_Exome_Target_Rev1_7APR20.bed" # EDIT TO YOUR PATH/FILE BEFORE RUNNING
 REF="mm10.fa" # EDIT TO YOUR REFERENCE FASTA BEFORE RUNNING
+ORG="mm10" # EDIT TO YOUR ORGANISM GENOME BUILD BEFORE RUNNING
 
 ```
 
