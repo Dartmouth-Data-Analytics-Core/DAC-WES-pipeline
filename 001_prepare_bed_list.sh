@@ -18,19 +18,20 @@ echo -e "#-----------------------------------------------------------#\n"
 #----- Set paths
 TARGETS="Twist_Mouse_Exome_Target_Rev1_7APR20.bed"
 REF="/dartfs-hpc/rc/lab/G/GMBSR_bioinfo/genomic_references/mouse/UCSC_mm10/mm10.fa"
+ORG="mm10"
 
 #----- Source conda
 source /optnfs/common/miniconda3/etc/profile.d/conda.sh
 conda activate /dartfs-hpc/rc/lab/G/GMBSR_bioinfo/misc/owen/sharedconda/miniconda/envs/gatk4
 
 #----- Create sequence dictionary
-gatk CreateSequenceDictionary -R "$REF" -O mm10.dict
+gatk CreateSequenceDictionary -R "$REF" -O "$ORG".dict
 
 #----- Convert to interval list format
 gatk BedToIntervalList \
     -I "$TARGETS" \
-    -O mm10.interval_list \
-    -SD mm10.dict
+    -O "$ORG".interval_list \
+    -SD "$ORG".dict
 
 #----- Split bed file into regions, add regions to list
 split -l 2155 "$TARGETS"
